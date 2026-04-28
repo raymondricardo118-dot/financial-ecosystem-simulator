@@ -1,83 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Financial Ecosystem Simulator</title>
+<title>Financial Ecosystem Terminal</title>
 
 <style>
 body{
   margin:0;
-  font-family:Arial;
-  background:#0b0f19;
+  font-family: Arial;
+  background:#0a0f14;
+  color:#e5e7eb;
+  display:flex;
+  height:100vh;
+}
+
+/* LEFT NAV PANEL */
+.sidebar{
+  width:220px;
+  background:#111827;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  border-right:1px solid #1f2937;
+}
+
+.sidebar h2{
+  color:#38bdf8;
+  font-size:16px;
+  margin-bottom:10px;
+}
+
+.sidebar a{
+  color:#9ca3af;
+  text-decoration:none;
+  padding:10px;
+  border-radius:6px;
+  cursor:pointer;
+  background:#0f172a;
+}
+
+.sidebar a:hover{
+  background:#1f2937;
   color:white;
 }
 
-header{
-  text-align:center;
-  padding:40px;
-  background:#111827;
-}
-
-nav{
+/* MAIN AREA */
+.main{
+  flex:1;
   display:flex;
-  justify-content:center;
-  gap:20px;
+  flex-direction:column;
+}
+
+/* TOP BAR */
+.topbar{
   padding:15px;
-  background:#1f2937;
-}
-
-a{
-  color:#38bdf8;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-section{
-  padding:60px;
+  background:#111827;
   border-bottom:1px solid #1f2937;
+  font-size:14px;
+  color:#9ca3af;
+}
+
+/* CONTENT AREA */
+.content{
+  padding:40px;
 }
 
 .card{
   background:#111827;
   padding:20px;
-  margin-top:10px;
-  border-radius:10px;
+  margin-top:15px;
+  border-radius:8px;
+  border:1px solid #1f2937;
+  color:#d1d5db;
+}
+
+.title{
+  font-size:22px;
+  color:#38bdf8;
+  margin-bottom:10px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Financial Ecosystem Simulator</h1>
-  <p>Click modules to navigate system</p>
-</header>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2>ECOSYSTEM MODULES</h2>
+  <a onclick="show('trade')">Trade Lifecycle</a>
+  <a onclick="show('nav')">NAV Engine</a>
+  <a onclick="show('batch')">Batch Optimizer</a>
+</div>
 
-<nav>
-  <a href="#trade">Trade System</a>
-  <a href="#nav">NAV System</a>
-  <a href="#batch">Batch System</a>
-</nav>
+<!-- MAIN -->
+<div class="main">
 
-<section id="trade">
-  <h2>Trade Lifecycle Engine</h2>
-  <div class="card">
-    Trade Capture → Validation → DB2 Storage → Settlement → Reporting
+  <!-- TOP BAR -->
+  <div class="topbar">
+    Financial Ecosystem Terminal | Status: ACTIVE | System: z/OS Simulation
   </div>
-</section>
 
-<section id="nav">
-  <h2>NAV Reconciliation Engine</h2>
-  <div class="card">
-    Assets - Liabilities = NAV → Reconciliation → Exception Handling
-  </div>
-</section>
+  <!-- CONTENT -->
+  <div class="content">
 
-<section id="batch">
-  <h2>Batch Optimization Engine</h2>
-  <div class="card">
-    COBOL Processing → DB2 Optimization → JCL Scheduling → Batch Execution
+    <!-- TRADE -->
+    <div id="trade" class="module">
+      <div class="title">Trade Lifecycle Engine</div>
+      <div class="card">
+        Trade Capture → Validation → DB2 Storage → Settlement → Reporting
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <div id="nav" class="module" style="display:none;">
+      <div class="title">NAV Reconciliation Engine</div>
+      <div class="card">
+        Assets - Liabilities = NAV → Cross-system Reconciliation → Exception Handling
+      </div>
+    </div>
+
+    <!-- BATCH -->
+    <div id="batch" class="module" style="display:none;">
+      <div class="title">Batch Optimization Engine</div>
+      <div class="card">
+        COBOL Processing → DB2 Optimization → JCL Scheduling → Batch Execution Window
+      </div>
+    </div>
+
   </div>
-</section>
+</div>
+
+<script>
+function show(id){
+
+  document.querySelectorAll('.module').forEach(m => {
+    m.style.display = 'none';
+  });
+
+  document.getElementById(id).style.display = 'block';
+}
+</script>
 
 </body>
 </html>
