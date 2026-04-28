@@ -30,7 +30,7 @@ body{
 /* LAYOUT */
 .container{
   display:grid;
-  grid-template-columns: 240px 1fr 320px;
+  grid-template-columns: 240px 1fr;
   height:calc(100vh - 40px);
 }
 
@@ -67,12 +67,6 @@ body{
   padding:15px;
 }
 
-/* RIGHT PANEL */
-.right{
-  border-left:1px solid #1f2937;
-  padding:15px;
-}
-
 /* PANELS */
 .panel{
   background:#0f172a;
@@ -88,29 +82,21 @@ body{
   margin-bottom:8px;
 }
 
-/* FEEDS */
+/* MODULES */
+.module{
+  display:none;
+}
+
+.active{
+  display:block;
+}
+
+/* FEED */
 .feed{
+  font-size:12px;
+  color:#22c55e;
   height:160px;
   overflow:hidden;
-  font-size:11px;
-  color:#22c55e;
-}
-
-/* TABLE */
-table{
-  width:100%;
-  font-size:12px;
-  border-collapse:collapse;
-}
-
-td{
-  padding:6px;
-  border-bottom:1px solid #1f2937;
-  color:#9ca3af;
-}
-
-.alert{
-  color:#facc15;
 }
 </style>
 </head>
@@ -119,8 +105,8 @@ td{
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <div>HEDGE FUND TRADING TERMINAL v6.0</div>
-  <div class="live">● LIVE SIMULATED MARKET</div>
+  <div>HEDGE FUND TRADING TERMINAL v7.0</div>
+  <div class="live">● LIVE SIMULATION ENGINE</div>
   <div id="clock"></div>
 </div>
 
@@ -129,16 +115,20 @@ td{
 <!-- SIDEBAR -->
 <div class="sidebar">
   <h3>MODULES</h3>
-  <a onclick="show('trade')">Trade Desk</a>
-  <a onclick="show('nav')">NAV Engine</a>
-  <a onclick="show('ops')">Operations</a>
+
+  <a onclick="showModule('trade')">Trade Desk</a>
+  <a onclick="showModule('nav')">NAV Engine</a>
+  <a onclick="showModule('ops')">Operations</a>
 </div>
 
 <!-- MAIN -->
 <div class="main">
 
+<!-- TRADE MODULE -->
+<div id="trade" class="module active">
+
   <div class="panel">
-    <div class="title">MARKET PRICES</div>
+    <div class="title">MARKET DATA</div>
     <div id="market"></div>
   </div>
 
@@ -149,24 +139,38 @@ td{
 
 </div>
 
-<!-- RIGHT -->
-<div class="right">
+<!-- NAV MODULE -->
+<div id="nav" class="module">
 
   <div class="panel">
-    <div class="title">PORTFOLIO NAV</div>
-    <div id="nav">NAV: Loading...</div>
-  </div>
-
-  <div class="panel">
-    <div class="title">OPS STATUS</div>
-    <div id="ops">IDLE</div>
+    <div class="title">NAV ENGINE</div>
+    <div id="navValue">NAV: Loading...</div>
   </div>
 
 </div>
 
+<!-- OPS MODULE -->
+<div id="ops" class="module">
+
+  <div class="panel">
+    <div class="title">OPERATIONS SYSTEM</div>
+    <div id="opsStatus">IDLE</div>
+  </div>
+
+</div>
+
+</div>
 </div>
 
 <script>
+
+/* ---------------- MODULE SWITCH ---------------- */
+function showModule(id){
+  document.querySelectorAll('.module').forEach(m=>{
+    m.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+}
 
 /* ---------------- CLOCK ---------------- */
 setInterval(()=>{
@@ -188,17 +192,15 @@ function updateMarket(){
 
   for(let s in market){
     let drift = (Math.random()-0.5)*1.5;
-    market[s] = Math.max(1, market[s] + drift);
+    market[s] += drift;
 
-    let arrow = drift > 0 ? "▲" : "▼";
-
-    html += `${s}: ${market[s].toFixed(2)} ${arrow}<br>`;
+    html += `${s}: ${market[s].toFixed(2)}<br>`;
   }
 
   document.getElementById("market").innerHTML = html;
 }
 
-/* ---------------- TRADE ENGINE (LINKED TO MARKET) ---------------- */
+/* ---------------- TRADE ENGINE ---------------- */
 
 let trades = [];
 
@@ -206,9 +208,7 @@ function updateTrades(){
   let keys = Object.keys(market);
   let sym = keys[Math.floor(Math.random()*keys.length)];
 
-  let trade = `${sym} EXECUTED @ ${market[sym].toFixed(2)}`;
-
-  trades.unshift(trade);
+  trades.unshift(`${sym} EXEC @ ${market[sym].toFixed(2)}`);
   if(trades.length > 10) trades.pop();
 
   document.getElementById("tradeFeed").innerHTML =
@@ -220,10 +220,9 @@ function updateTrades(){
 let nav = 7200000;
 
 function updateNAV(){
-  let drift = (Math.random()-0.5)*40000;
-  nav += drift;
+  nav += (Math.random()-0.5)*30000;
 
-  document.getElementById("nav").innerText =
+  document.getElementById("navValue").innerText =
     "NAV: $" + nav.toFixed(2);
 }
 
@@ -231,25 +230,24 @@ function updateNAV(){
 
 const opsStates = [
   "RUNNING RISK CHECKS",
-  "PROCESSING BATCH",
+  "PROCESSING BATCH JOBS",
   "RECONCILING POSITIONS",
   "UPDATING LEDGER",
   "IDLE"
 ];
 
 function updateOps(){
-  document.getElementById("ops").innerText =
+  document.getElementById("opsStatus").innerText =
     opsStates[Math.floor(Math.random()*opsStates.length)];
 }
 
-/* ---------------- MASTER LOOP ---------------- */
-
+/* ---------------- MAIN LOOP ---------------- */
 setInterval(()=>{
   updateMarket();
   updateTrades();
   updateNAV();
   updateOps();
-}, 1000);
+},1000);
 
 </script>
 
