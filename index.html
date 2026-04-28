@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Financial Ecosystem Simulator</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0b0f19;
+  color:white;
+}
+
+header{
+  text-align:center;
+  padding:40px;
+  background:#111827;
+}
+
+nav{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  padding:15px;
+  background:#1f2937;
+}
+
+a{
+  color:#38bdf8;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+section{
+  padding:60px;
+  border-bottom:1px solid #1f2937;
+}
+
+.card{
+  background:#111827;
+  padding:20px;
+  margin-top:10px;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Financial Ecosystem Simulator</h1>
+  <p>Click modules to navigate system</p>
+</header>
+
+<nav>
+  <a href="#trade">Trade System</a>
+  <a href="#nav">NAV System</a>
+  <a href="#batch">Batch System</a>
+</nav>
+
+<section id="trade">
+  <h2>Trade Lifecycle Engine</h2>
+  <div class="card">
+    Trade Capture → Validation → DB2 Storage → Settlement → Reporting
+  </div>
+</section>
+
+<section id="nav">
+  <h2>NAV Reconciliation Engine</h2>
+  <div class="card">
+    Assets - Liabilities = NAV → Reconciliation → Exception Handling
+  </div>
+</section>
+
+<section id="batch">
+  <h2>Batch Optimization Engine</h2>
+  <div class="card">
+    COBOL Processing → DB2 Optimization → JCL Scheduling → Batch Execution
+  </div>
+</section>
+
+</body>
+</html>
