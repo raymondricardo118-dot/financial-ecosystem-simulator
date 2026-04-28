@@ -104,28 +104,98 @@ body{
   <div class="content">
 
     <!-- TRADE -->
-    <div id="trade" class="module">
-      <div class="title">Trade Lifecycle Engine</div>
-      <div class="card">
-        Trade Capture → Validation → DB2 Storage → Settlement → Reporting
-      </div>
-    </div>
+  <div id="trade" class="module">
+  <div class="title">Trade Lifecycle Engine</div>
+
+  <div class="card">
+    <b>Process Flow:</b><br>
+    Trade Capture → Validation → Enrichment → DB2 Persistence → Settlement → Reporting<br><br>
+
+    <b>Input Example:</b><br>
+    Trade ID: T98765432<br>
+    Instrument: Equity (AAPL)<br>
+    Quantity: 500<br>
+    Price: 185.25<br>
+    Trade Date: 2026-04-28<br><br>
+
+    <b>Validation Rules:</b>
+    <ul>
+      <li>Trade ID must be unique</li>
+      <li>Quantity must be > 0</li>
+      <li>Price must be market valid</li>
+      <li>Trade date must match business calendar</li>
+    </ul>
+
+    <b>Output Status:</b><br>
+    ✔ Trade Accepted<br>
+    ✔ Stored in DB2 Trade Book<br>
+    ✔ Sent for Settlement Processing<br>
+  </div>
+</div>
 
     <!-- NAV -->
     <div id="nav" class="module" style="display:none;">
-      <div class="title">NAV Reconciliation Engine</div>
-      <div class="card">
-        Assets - Liabilities = NAV → Cross-system Reconciliation → Exception Handling
-      </div>
-    </div>
+  <div class="title">NAV Reconciliation Engine</div>
+
+  <div class="card">
+    <b>NAV Formula:</b><br>
+    NAV = Total Assets - Total Liabilities<br><br>
+
+    <b>Sample Fund Data:</b><br>
+    Assets: $10,000,000<br>
+    Liabilities: $2,500,000<br>
+    Calculated NAV: $7,500,000<br><br>
+
+    <b>Reconciliation Sources:</b>
+    <ul>
+      <li>Front Office System NAV</li>
+      <li>Back Office Accounting System NAV</li>
+      <li>Custodian Bank Records</li>
+    </ul>
+
+    <b>Break Detection Logic:</b>
+    <ul>
+      <li>Difference threshold > $1,000 triggers alert</li>
+      <li>Missing price feeds flagged</li>
+      <li>Corporate actions mismatch detection</li>
+    </ul>
+
+    <b>Status:</b><br>
+    ✔ NAV Matched Across Systems<br>
+    ✔ No Reconciliation Breaks Detected<br>
+  </div>
+</div>
 
     <!-- BATCH -->
-    <div id="batch" class="module" style="display:none;">
-      <div class="title">Batch Optimization Engine</div>
-      <div class="card">
-        COBOL Processing → DB2 Optimization → JCL Scheduling → Batch Execution Window
-      </div>
-    </div>
+   <div id="batch" class="module" style="display:none;">
+  <div class="title">Batch Optimization Engine</div>
+
+  <div class="card">
+    <b>Batch Job Flow:</b><br>
+    File Input → COBOL Processing → DB2 Update → Sorting → Report Generation → Output File<br><br>
+
+    <b>Sample Batch Metrics:</b>
+    <ul>
+      <li>Records Processed: 1,250,000</li>
+      <li>Job Duration: 42 minutes</li>
+      <li>DB2 Calls: 3.2 million</li>
+      <li>I/O Operations: 850,000</li>
+    </ul>
+
+    <b>Optimization Techniques:</b>
+    <ul>
+      <li>Indexed DB2 access paths</li>
+      <li>Reduced sequential file scans</li>
+      <li>Batch job parallelization</li>
+      <li>Minimized commit frequency</li>
+    </ul>
+
+    <b>Performance Result:</b><br>
+    ✔ Batch window reduced by 35%<br>
+    ✔ CPU usage optimized<br>
+    ✔ Improved throughput stability<br>
+  </div>
+</div>
 
   </div>
 </div>
